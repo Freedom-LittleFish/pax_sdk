@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
               const Spacer(),
               FloatingActionButton(onPressed: () async{
                 PrinterRequest printRequest = PrinterRequest(
-                  formatPrintStr: generateReceipt(),
+                  formatPrintStr: generateReceipt(new PaymentResponse()),
                   cutMode: -1,
                 );
                 ProcessResult processResult = await PaxPosApi().print(printRequest);
@@ -104,8 +104,9 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  String generateReceipt(){
-    return "\LDate: ${getDate()} \RTime:${getTime()}";
+  String generateReceipt(PaymentResponse pr){
+    return "\\L Date: ${pr == null? getDate(): pr.Timestamp} \\R Time:${getTime()} \n"
+        "\c";
   }
 
   String getDate(){
