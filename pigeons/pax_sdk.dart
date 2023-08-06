@@ -4,10 +4,8 @@ import 'package:pigeon/pigeon.dart';
 @ConfigurePigeon(PigeonOptions(
   dartOut: 'lib/PaxSdkPlugin.g.dart',
   dartOptions: DartOptions(),
-  javaOut:  'android/app/src/main/java/io/flutter/plugins/pax_sdk.java',
+  javaOut:  'example/android/app/src/main/java/io/flutter/plugins/pax_sdk.java',
   javaOptions: JavaOptions(),
-
-
 ))
 //Payment request
 class AutoRentalInfo{
@@ -65,9 +63,6 @@ class CommercialCard{
 class ExtraChargeItem{
   String? ItemType ;
   String? ExtraChargeAmount ;
-
-
-
 }
 class FleetCard{
   String?  Odometer ;
@@ -542,194 +537,50 @@ class VASResponseInfo {
 
 
 }
-//Printer Request
+ //Printer Request
+class ProcessResult {
+ Map<String?, String?>? c ;
+String? a;
+String? b;
+}
 class PrinterRequest{
-  String? formatPrintStr;
-  int? cutMode;
-  Uint8List? bitMapImage;
-  int? alignment;
-}
-class PrintWidth{
-  static const int A920_RECOMMEND_WIDTH = 404;
-  static const int A930_RECOMMEND_WIDTH = 404;
-  static const int A80_RECOMMEND_WIDTH = 404;
-  static const int E600_RECOMMEND_WIDTH = 404;
-  static const int A920Pro_RECOMMEND_WIDTH = 404;
-  static const int E500_RECOMMEND_WIDTH = 576;
-  static const int E700_RECOMMEND_WIDTH = 576;
-  static const int E800_RECOMMEND_WIDTH = 576;
-  static const int SK600_RECOMMEND_WIDTH = 576;
-  static const int SK700_RECOMMEND_WIDTH = 576;
-  static const int SK800_RECOMMEND_WIDTH = 576;
-}
-class PrinterStatus {
-  final int SUCCESS = 0;
-  final int BUSY = 1;
-  final int OUT_OF_PAPER = 2;
-  final int PRINT_DATA_PACKET_ERROR = 3;
-  final int MALFUNCTIONS = 4;
-  final int OVER_HEATS = 8;
-  final int VOLTAGE_IS_TOO_LOW = 9;
-  final int UNFINISHED = 240;
-  final int CUT_JAM_ERROR = 250;
-  final int COVER_OPEN_ERROR = 251;
-  final int NOT_INSTALLED_FONT_LIBRARY = 252;
-  final int DATA_PACKAGE_IS_TOO_LONG = 254;
-}
-class GreyLevel {
-  static const int TWO_LAYER_THERMAL = 3;
-  static const int HIGHER_TWO_LAYER_THERMAL = 4;
-  static const int LOWEST_PERCENTAGE = 50;
-  static const int HIGHEST_PERCENTAGE = 500;
-  static const int DEFAULT = 4;
-  static const int STANDARD = 1;
-}
-class CutMode {
-static const int FULL_PAPER_CUT = 0;
-static const int PARTIAL_PAPER_CUT = 1;
-static const int DO_NOT_CUT = -1;
-}
+   String? formatPrintStr;
+   int? cutMode;
+   Uint8List? bitMapImage;
+   int? alignment;
+ }
 class PrinterSettings{
   int? greyLevel;
   int? cutMode;
   int? printWidth;
 }
 
-//Printer Response
-class ProcessResult {
-  static const String CODE_OK = "000000";
-  static const String CODE_NOT_SUPPORT = "209900";
-  static const String CODE_CASH_DRAWER_ERROR = "209901";
-  static const String CODE_OPEN_SCANNER_FAIL = "209902";
-  static const String CODE_PRINTER_IS_BUSY = "209903";
-  static const String CODE_OUT_OF_PAPER = "209904";
-  static const String CODE_FORMAT_OF_PRINT_DATA_ERROR = "209905";
-  static const String CODE_PRINTER_MALFUNCTIONS = "209906";
-  static const String CODE_PRINTER_OVER_HEATS = "209907";
-  static const String CODE_PRINTER_VOLTAGE_TOO_LOW = "209908";
-  static const String CODE_PRINTING_IS_UNFINISHED = "209909";
-  static const String CODE_PRINTER_NOT_INSTALLED_FONT = "209910";
-  static const String CODE_DATA_PACKAGE_TOO_LONG = "209911";
-  static const String CODE_ILLEGLAL_ARGUMENT = "209912";
-  static const String CODE_COVER_OPEN = "209913";
-  static const String CODE_CUTTER_JAM = "209914";
-  static const String CODE_ERROR_UNSUPPORTED_ENCODING = "209915";
-  static const String CODE_FONT_FORMAT_ERR = "209916";
-  static const String CODE_FONT_NOT_EXIST = "209917";
-  static const String CODE_PRINTER_BAR_ERROR = "209918";
-  static const String CODE_BLUETOOTH_ERR_CONN = "201001";
-  static const String CODE_BLUETOOTH_ERR_RECV = "201002";
-  static const String CODE_BLUETOOTH_ERR_SEND = "201003";
-  static const String CODE_UNKNOWN_ERROR = "199999";
-  static const String CODE_CONN_ERROR = "200099";
-  static const String CODE_ERR_INVALID_ARGUMENT = "200098";
-  static const String CODE_NO_PERMISSION_ERROR = "200101";
-  static const String CODE_NO_SUPPORT_ERROR = "200100";
-  static const String CODE_RPC_BUSY = "200102";
-  static const String MESSAGE_OK = "OK";
-  static const String MESSAGE_NOT_SUPPORT = "Not Found. May Not Supported";
-  static const String MESSAGE_CASH_DRAWER_ERROR = "Open Cash Drawer Fail";
-  static const String MESSAGE_OPEN_SCANNER_FAIL = "Open Scanner Fail";
-  static const String MESSAGE_PRINTER_IS_BUSY = "Printer is busy";
-  static const String MESSAGE_OUT_OF_PAPER = "Out of paper";
-  static const String MESSAGE_FORMAT_OF_PRINT_DATA_ERROR = "The format of print data packet error";
-  static const String MESSAGE_PRINTER_MALFUNCTIONS = "Printer malfunctions";
-  static const String MESSAGE_PRINTER_OVER_HEATS = "Printer over heats";
-  static const String MESSAGE_PRINTER_VOLTAGE_TOO_LOW = "Printer voltage is too low";
-  static const String MESSAGE_PRINTING_IS_UNFINISHED = "Printing is unfinished";
-  static const String MESSAGE_PRINTER_NOT_INSTALLED_FONT = "The printer has not installed font library";
-  static const String MESSAGE_DATA_PACKAGE_TOO_LONG = "Data package is too long";
-  static const String MESSAGE_ILLEGLAL_ARGUMENT = "Illegal Argument";
-  static const String MESSAGE_COVER_OPEN = "Cover open error";
-  static const String MESSAGE_CUTTER_JAM = "Cut jam error";
-  static const String MESSAGE_ERROR_UNSUPPORTED_ENCODING = "Unsupported encoding error";
-  static const String MESSAGE_FONT_FORMAT_ERR = "Font file format error";
-  static const String MESSAGE_FONT_NOT_EXIST = "Font not exist error";
-  static const String MESSAGE_UNKNOWN_ERROR = "Unknown error";
-  static const String MESSAGE_BLUETOOTH_ERR_CONN = "Bluetooth connection failed!";
-  static const String MESSAGE_BLUETOOTH_ERR_RECV = "Bluetooth failed to receive data";
-  static const String MESSAGE_BLUETOOTH_ERR_SEND = "Bluetooth failed to send data";
-  static const String MESSAGE_CONN_ERROR = "Connect error";
-  static const String MESSAGE_ERR_INVALID_ARGUMENT = "Invalid argument error";
-  static const String MESSAGE_NO_PERMISSION_ERROR = "No permission error";
-  static const String MESSAGE_NO_SUPPORT_ERROR = "Not support error";
-  static const String MESSAGE_RPC_BUSY = "Module disabled";
-  static final Map<String, String> c = <String,String> {
-  "000000": "OK",
-  "209900": "Not Found. May Not Supported",
-  "209901": "Open Cash Drawer Fail",
-  "209902": "Open Scanner Fail",
-  "209903": "Printer is busy",
-  "209904": "Out of paper",
-  "209905": "The format of print data packet error",
-  "209906": "Printer malfunctions",
-  "209907": "Printer over heats",
-  "209908": "Printer voltage is too low",
-  "209909": "Printing is unfinished",
-  "209910": "The printer has not installed font library",
-  "209911": "Data package is too long",
-  "209912": "Illegal Argument",
-  "200099": "Connect error",
-  "200098": "Invalid argument error",
-  "200101": "No permission error",
-  "200100": "Not support error",
-  "200102": "Module disabled",
-  "209913": "Cover open error",
-  "209914": "Cut jam error",
-  "209915": "Unsupported encoding error",
-  "209916": "Font file format error",
-  "209917": "Font not exist error",
-  "199999": "Unknown error",
-  "201001": "Bluetooth connection failed!",
-  "201002": "Bluetooth failed to receive data",
-  "201003": "Bluetooth failed to send data",
 
-};
-  String? a;
-  String? b;
-
-ProcessResult(String code) {
-  this.a = code;
-  if (c?[code]?.isEmpty == true) {
-  code = "Unknown Error";
-  }
-
-  this.b = code;
+//Scan results
+class ScanResult {
+String? a;
+String? b;
 }
-
-ProcessResult.codeAndMessage(String code, String message) {
-  this.a = code;
-  this.b = message;
-}
-
-String? getCode() {
-  return this.a;
-}
-
-String? getMessage() {
-  return this.b;
-}
-}
-
 
 
 
 @HostApi()
-abstract class PAXPOSSdk{
+abstract class PaxPosApi{
+  @async
+  PaymentResponse charge(PaymentRequest paymentRequest);
 
- @async
-PaymentResponse MakeCardPayment(PaymentRequest paymentRequest);
+  @async
+  ProcessResult print(PrinterRequest printerRequest);
 
- ///*
- ///Printer settings are optional
- ///Use static(PrintWidth , CutMode and GreyLevel) for acceptable values
- ///read POSLink documentation for Print format understanding
- ///
- @async
- Print(PrinterRequest printerRequest, PrinterSettings? printerSettings);
+  @async
+  ScanResult ScanHW();
 
- @async
-  ProcessResult getPrinterStatus();
+  @async
+  ScanResult Scan();
+
+
+
+
 }
 
 

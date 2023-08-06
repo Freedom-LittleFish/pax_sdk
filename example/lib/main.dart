@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:flutter/services.dart';
+import 'package:pax_sdk/PaxSdkPlugin.g.dart';
 import 'package:pax_sdk/pax_sdk.dart';
 
 void main() {
@@ -53,10 +55,64 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+        body: Scaffold(
+          body: Center(
+            child: Text('Running on: $_platformVersion\n'),
+          ),
+          floatingActionButton: (Row(
+            children: [
+              const Spacer(),
+              FloatingActionButton(onPressed: () async{
+                PrinterRequest printRequest = PrinterRequest(
+                  formatPrintStr: generateReceipt(),
+                  cutMode: -1,
+                );
+                ProcessResult processResult = await PaxPosApi().print(printRequest);
+                print(processResult);
+              },
+              child: const Icon(Icons.print)),
+              const Spacer(),
+              FloatingActionButton(onPressed: () async{
+                PaymentRequest paymentRequest = PaymentRequest(
+                  Amount: "1000",
+                  ContinuousScreen: "0",
+                  TenderType: 1,
+                  TransType: 2,
+                  ECRRefNum: "1"
+                );
+                PaymentResponse paymentResponse = await PaxPosApi().charge(paymentRequest);
+                print(paymentResponse);
+              },
+                  child: const Icon(Icons.credit_card)),
+              const Spacer(),
+              FloatingActionButton(onPressed: () async {
+                ScanResult scanResult = await PaxPosApi().Scan();
+                print(scanResult);
+              },
+                  child: const Icon(Icons.camera_alt)),
+              const Spacer(),
+              FloatingActionButton(onPressed: () async{
+                ScanResult scanResult = await PaxPosApi().ScanHW();
+                print(scanResult);
+              },
+              child: const Icon(Icons.scanner),),
+
+            ],
+          )),
         ),
       ),
     );
+  }
+
+  String generateReceipt(){
+    return "\LDate: ${getDate()} \RTime:${getTime()}";
+  }
+
+  String getDate(){
+    return "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}";
+  }
+
+  String getTime(){
+    return "${DateTime.now().hour} : ${DateTime.now().minute}";
   }
 }

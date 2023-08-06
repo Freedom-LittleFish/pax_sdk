@@ -1,5 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="littlefish.pos.pax_sdk_example">
+    <uses-permission android:name="com.pax.permission.ICC"/>
+    <uses-permission android:name="com.pax.permission.PRINTER"/>
+    <uses-permission android:name="com.pax.permission.PICC"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+
    <application
         android:label="pax_sdk_example"
         android:name="${applicationName}"

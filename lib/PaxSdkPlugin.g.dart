@@ -1573,8 +1573,95 @@ class VASResponseInfo {
   }
 }
 
-class _CardPaymentCodec extends StandardMessageCodec {
-  const _CardPaymentCodec();
+class ProcessResult {
+  ProcessResult({
+    this.c,
+    this.a,
+    this.b,
+  });
+
+  Map<String?, String?>? c;
+  String? a;
+  String? b;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['c'] = c;
+    pigeonMap['a'] = a;
+    pigeonMap['b'] = b;
+    return pigeonMap;
+  }
+
+  static ProcessResult decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return ProcessResult(
+      c: (pigeonMap['c'] as Map<Object?, Object?>?)?.cast<String?, String?>(),
+      a: pigeonMap['a'] as String?,
+      b: pigeonMap['b'] as String?,
+    );
+  }
+}
+
+class PrinterRequest {
+  PrinterRequest({
+    this.formatPrintStr,
+    this.cutMode,
+    this.bitMapImage,
+    this.alignment,
+  });
+
+  String? formatPrintStr;
+  int? cutMode;
+  Uint8List? bitMapImage;
+  int? alignment;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['formatPrintStr'] = formatPrintStr;
+    pigeonMap['cutMode'] = cutMode;
+    pigeonMap['bitMapImage'] = bitMapImage;
+    pigeonMap['alignment'] = alignment;
+    return pigeonMap;
+  }
+
+  static PrinterRequest decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return PrinterRequest(
+      formatPrintStr: pigeonMap['formatPrintStr'] as String?,
+      cutMode: pigeonMap['cutMode'] as int?,
+      bitMapImage: pigeonMap['bitMapImage'] as Uint8List?,
+      alignment: pigeonMap['alignment'] as int?,
+    );
+  }
+}
+
+class ScanResult {
+  ScanResult({
+    this.a,
+    this.b,
+  });
+
+  String? a;
+  String? b;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['a'] = a;
+    pigeonMap['b'] = b;
+    return pigeonMap;
+  }
+
+  static ScanResult decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return ScanResult(
+      a: pigeonMap['a'] as String?,
+      b: pigeonMap['b'] as String?,
+    );
+  }
+}
+
+class _PaxPosApiCodec extends StandardMessageCodec {
+  const _PaxPosApiCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
     if (value is AddlRspData) {
@@ -1645,28 +1732,40 @@ class _CardPaymentCodec extends StandardMessageCodec {
       buffer.putUint8(144);
       writeValue(buffer, value.encode());
     } else 
-    if (value is Restaurant) {
+    if (value is PrinterRequest) {
       buffer.putUint8(145);
       writeValue(buffer, value.encode());
     } else 
-    if (value is RoomRates) {
+    if (value is ProcessResult) {
       buffer.putUint8(146);
       writeValue(buffer, value.encode());
     } else 
-    if (value is TORResponseInfo) {
+    if (value is Restaurant) {
       buffer.putUint8(147);
       writeValue(buffer, value.encode());
     } else 
-    if (value is TaxDetail) {
+    if (value is RoomRates) {
       buffer.putUint8(148);
       writeValue(buffer, value.encode());
     } else 
-    if (value is TransactionBehavior) {
+    if (value is ScanResult) {
       buffer.putUint8(149);
       writeValue(buffer, value.encode());
     } else 
-    if (value is VASResponseInfo) {
+    if (value is TORResponseInfo) {
       buffer.putUint8(150);
+      writeValue(buffer, value.encode());
+    } else 
+    if (value is TaxDetail) {
+      buffer.putUint8(151);
+      writeValue(buffer, value.encode());
+    } else 
+    if (value is TransactionBehavior) {
+      buffer.putUint8(152);
+      writeValue(buffer, value.encode());
+    } else 
+    if (value is VASResponseInfo) {
+      buffer.putUint8(153);
       writeValue(buffer, value.encode());
     } else 
 {
@@ -1728,21 +1827,30 @@ class _CardPaymentCodec extends StandardMessageCodec {
         return PaymentTransInfo.decode(readValue(buffer)!);
       
       case 145:       
-        return Restaurant.decode(readValue(buffer)!);
+        return PrinterRequest.decode(readValue(buffer)!);
       
       case 146:       
-        return RoomRates.decode(readValue(buffer)!);
+        return ProcessResult.decode(readValue(buffer)!);
       
       case 147:       
-        return TORResponseInfo.decode(readValue(buffer)!);
+        return Restaurant.decode(readValue(buffer)!);
       
       case 148:       
-        return TaxDetail.decode(readValue(buffer)!);
+        return RoomRates.decode(readValue(buffer)!);
       
       case 149:       
-        return TransactionBehavior.decode(readValue(buffer)!);
+        return ScanResult.decode(readValue(buffer)!);
       
       case 150:       
+        return TORResponseInfo.decode(readValue(buffer)!);
+      
+      case 151:       
+        return TaxDetail.decode(readValue(buffer)!);
+      
+      case 152:       
+        return TransactionBehavior.decode(readValue(buffer)!);
+      
+      case 153:       
         return VASResponseInfo.decode(readValue(buffer)!);
       
       default:      
@@ -1752,19 +1860,19 @@ class _CardPaymentCodec extends StandardMessageCodec {
   }
 }
 
-class CardPayment {
-  /// Constructor for [CardPayment].  The [binaryMessenger] named argument is
+class PaxPosApi {
+  /// Constructor for [PaxPosApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  CardPayment({BinaryMessenger? binaryMessenger}) : _binaryMessenger = binaryMessenger;
+  PaxPosApi({BinaryMessenger? binaryMessenger}) : _binaryMessenger = binaryMessenger;
 
   final BinaryMessenger? _binaryMessenger;
 
-  static const MessageCodec<Object?> codec = _CardPaymentCodec();
+  static const MessageCodec<Object?> codec = _PaxPosApiCodec();
 
-  Future<PaymentResponse> MakeCardPayment(PaymentRequest arg_paymentRequest) async {
+  Future<PaymentResponse> charge(PaymentRequest arg_paymentRequest) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.CardPayment.MakeCardPayment', codec, binaryMessenger: _binaryMessenger);
+        'dev.flutter.pigeon.PaxPosApi.charge', codec, binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_paymentRequest]) as Map<Object?, Object?>?;
     if (replyMap == null) {
@@ -1786,6 +1894,87 @@ class CardPayment {
       );
     } else {
       return (replyMap['result'] as PaymentResponse?)!;
+    }
+  }
+
+  Future<ProcessResult> print(PrinterRequest arg_printerRequest) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.PaxPosApi.print', codec, binaryMessenger: _binaryMessenger);
+    final Map<Object?, Object?>? replyMap =
+        await channel.send(<Object?>[arg_printerRequest]) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error = (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+    } else if (replyMap['result'] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (replyMap['result'] as ProcessResult?)!;
+    }
+  }
+
+  Future<ScanResult> ScanHW() async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.PaxPosApi.ScanHW', codec, binaryMessenger: _binaryMessenger);
+    final Map<Object?, Object?>? replyMap =
+        await channel.send(null) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error = (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+    } else if (replyMap['result'] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (replyMap['result'] as ScanResult?)!;
+    }
+  }
+
+  Future<ScanResult> Scan() async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.PaxPosApi.Scan', codec, binaryMessenger: _binaryMessenger);
+    final Map<Object?, Object?>? replyMap =
+        await channel.send(null) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error = (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+    } else if (replyMap['result'] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (replyMap['result'] as ScanResult?)!;
     }
   }
 }

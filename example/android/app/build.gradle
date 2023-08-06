@@ -53,9 +53,6 @@ android {
 
 dependencies {
     implementation files('libs/GLComm_V1.08.00_20211022.jar')
-    implementation files('libs/GLComm_V1.08.00_20211022.jar')
-    implementation files('libs/GLComm_V1.08.00_20211022.jar')
-    implementation files('libs/GLComm_V1.08.00_20211022.jar')
     implementation files('libs/GLExtPrinter_V1.01.01_20191225.jar')
     implementation files('libs/gson-2.8.6.jar')
     implementation files('libs/jsch-0.1.55.jar')
