@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Scaffold(
           body: Center(
-            child: Text('Running on: $_platformVersion\n'),
+            child: Text('Result:$_platformVersion\n'),
           ),
           floatingActionButton: (Row(
             children: [
@@ -69,6 +69,9 @@ class _MyAppState extends State<MyApp> {
                 );
                 ProcessResult processResult = await PaxPosApi().print(printRequest);
                 print(processResult);
+                setState((){
+                  _platformVersion = " ${processResult.a}: ${processResult.b}";
+                });
               },
               child: const Icon(Icons.print)),
               const Spacer(),
@@ -81,6 +84,9 @@ class _MyAppState extends State<MyApp> {
                   ECRRefNum: "1"
                 );
                 PaymentResponse paymentResponse = await PaxPosApi().charge(paymentRequest);
+                setState((){
+                  _platformVersion = paymentResponse.ResultTxt!;
+                });
                 print(paymentResponse);
               },
                   child: const Icon(Icons.credit_card)),
@@ -88,12 +94,19 @@ class _MyAppState extends State<MyApp> {
               FloatingActionButton(onPressed: () async {
                 ScanResult scanResult = await PaxPosApi().Scan();
                 print(scanResult);
+
+                setState((){
+                  _platformVersion = "${scanResult.a}: ${scanResult.b}";
+                });
               },
                   child: const Icon(Icons.camera_alt)),
               const Spacer(),
               FloatingActionButton(onPressed: () async{
                 ScanResult scanResult = await PaxPosApi().ScanHW();
                 print(scanResult);
+                setState((){
+                  _platformVersion = " ${scanResult.a}: ${scanResult.b}";
+                });
               },
               child: const Icon(Icons.scanner),),
 
